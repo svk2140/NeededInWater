@@ -59,31 +59,36 @@ public class EventSpectatorThirst
 				}
 					
 				BiomeGenBase biome = e.player.worldObj.getBiomeGenForCoords((int) e.player.posX, (int)e.player.posZ);
-				
-				if(biome == BiomeGenBase.desert || biome == BiomeGenBase.desertHills)
-				{
-					ExtendedPlayer.get(e.player).data.isThirst -= BaseClassMod.decreaseThirst;
-				}
-				else if(biome == BiomeGenBase.savanna || biome == BiomeGenBase.savannaPlateau)
-				{
-					ExtendedPlayer.get(e.player).data.isThirst -= BaseClassMod.decreaseThirst * 0.5F;
-				}
-				else if(biome == BiomeGenBase.mesa || biome == BiomeGenBase.mesaPlateau || biome == BiomeGenBase.mesaPlateau_F)
-				{
-					ExtendedPlayer.get(e.player).data.isThirst -= BaseClassMod.decreaseThirst * 1.5F;
-				}
-				else if(biome == BiomeGenBase.taiga || biome == BiomeGenBase.taigaHills || biome == BiomeGenBase.coldBeach || biome == BiomeGenBase.coldTaiga || biome == BiomeGenBase.coldTaigaHills || biome == BiomeGenBase.iceMountains || biome == BiomeGenBase.icePlains)
-				{
-					ExtendedPlayer.get(e.player).data.isThirst -= BaseClassMod.decreaseThirst * 0.3F;
-				}
-			}
-			else
-			{
-				ExtendedPlayer.get(e.player).data.isThirst = 0;
-				
-				if(!e.player.isPotionActive(Potion.wither.id))
-				{
-					e.player.addPotionEffect(new PotionEffect(Potion.wither.id, 5*20, 0));
+				switch(biome){
+					case BiomeGenBase.desert:
+						case BiomeGenBase.desertHills:
+							ExtendedPlayer.get(e.player).data.isThirst -= BaseClassMod.decreaseThirst;
+							break;
+					case BiomeGenBase.savanna:
+						case BiomeGenBase.savannaPlateau:
+							ExtendedPlayer.get(e.player).data.isThirst -= BaseClassMod.decreaseThirst * 0.5F;
+							break;
+					case BiomeGenBase.mesa:
+						case BiomeGenBase.mesaPlateau:
+							case BiomeGenBase.mesaPlateau_F:
+								ExtendedPlayer.get(e.player).data.isThirst -= BaseClassMod.decreaseThirst * 1.5F;
+								break;
+					case BiomeGenBase.taiga:
+						case BiomeGenBase.taigaHills:
+							case BiomeGenBase.coldBeach:
+								case BiomeGenBase.coldTaiga:
+									case BiomeGenBase.coldTaigaHills:
+										case BiomeGenBase.iceMountains:
+											case BiomeGenBase.icePlains:
+												ExtendedPlayer.get(e.player).data.isThirst -= BaseClassMod.decreaseThirst * 0.3F;
+												break;
+					default:
+						ExtendedPlayer.get(e.player).data.isThirst = 0;
+						if(!e.player.isPotionActive(Potion.wither.id))
+						{
+							e.player.addPotionEffect(new PotionEffect(Potion.wither.id, 5*20, 0));
+						}
+						break;
 				}
 			}
 		}
