@@ -6,5 +6,5 @@ public class ModInfo
 {
 	public static final String MODID = "neededinwater";
 	public static final String MODNAME = "NeededInWater";
-	public static final String MODVERSION = "1";
+	public static final String MODVERSION = "2";
 }
