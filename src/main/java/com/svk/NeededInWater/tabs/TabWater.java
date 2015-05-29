@@ -12,7 +12,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class TabWater extends CreativeTabs 
 {
-	private Item texture;
 	public TabWater(String tabID)
 	{
 		super(tabID);
