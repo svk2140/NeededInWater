@@ -36,13 +36,13 @@ public class WaterScale extends Gui
         
     	if(!player.capabilities.isCreativeMode)
     	{
-    		if(ExtendedPlayer.get(player).data.isThirst < BaseClassMod.maxThirst)
+    		int thirst = ExtendedPlayer.get(player).data.isThirst;
+    		if(thirst < BaseClassMod.maxThirst)
     		{
-		        int thirst = ExtendedPlayer.get(player).data.isThirst;
 		        int step = BaseClassMod.maxThirst / 10;
 		        
 		    	int stop = 0;
-		    	int max = ExtendedPlayer.get(player).data.isThirst;
+		    	int max = thirst;
 		    	int residue = 0;
 		    	
 		    	for(int s = 0; s < 10; s++)

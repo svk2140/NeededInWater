@@ -24,17 +24,18 @@ public class EventSpectatorThirst
 		
 		if(!e.player.capabilities.isCreativeMode)
 		{			
-			if(ExtendedPlayer.get(e.player).data.isThirst > 0)
+			int thirst = ExtendedPlayer.get(e.player).data.isThirst;
+			if(thirst > 0)
 			{
 				float factorThirst = ExtendedPlayer.get(e.player).data.factorThirst;
 							
 				if(factorThirst == 0)
 				{
-					ExtendedPlayer.get(e.player).data.isThirst -= BaseClassMod.decreaseThirst;
+					thirst -= BaseClassMod.decreaseThirst;
 				}
 				else
 				{
-					ExtendedPlayer.get(e.player).data.isThirst -= (int) (BaseClassMod.decreaseThirst*factorThirst);
+					thirst -= (int) (BaseClassMod.decreaseThirst*factorThirst);
 					ExtendedPlayer.get(e.player).data.durationFactorThirst -= 1;
 					
 					if(ExtendedPlayer.get(e.player).data.durationFactorThirst == 0)
@@ -45,47 +46,48 @@ public class EventSpectatorThirst
 				
 				if(e.player.isSprinting())
 				{
-					ExtendedPlayer.get(e.player).data.isThirst -= BaseClassMod.decreaseThirst;
+					thirst -= BaseClassMod.decreaseThirst;
 				}
 				
 				if(e.player.posY > BaseClassMod.heightLevel)
 				{
-					ExtendedPlayer.get(e.player).data.isThirst -= BaseClassMod.decreaseThirst * 0.5;
+					thirst -= BaseClassMod.decreaseThirst * 0.5;
 				}
 				
 				if(e.player.posY > BaseClassMod.heightLevel + (BaseClassMod.heightLevel - BaseClassMod.normalLevel))
 				{
-					ExtendedPlayer.get(e.player).data.isThirst -= BaseClassMod.decreaseThirst * 0.5;
+					thirst -= BaseClassMod.decreaseThirst * 0.5;
 				}
 					
 				BiomeGenBase biome = e.player.worldObj.getBiomeGenForCoords((int) e.player.posX, (int)e.player.posZ);
 				
 				if(biome == BiomeGenBase.desert || biome == BiomeGenBase.desertHills)
 				{
-					ExtendedPlayer.get(e.player).data.isThirst -= BaseClassMod.decreaseThirst;
+					thirst -= BaseClassMod.decreaseThirst;
 				}
 				else if(biome == BiomeGenBase.savanna || biome == BiomeGenBase.savannaPlateau)
 				{
-					ExtendedPlayer.get(e.player).data.isThirst -= BaseClassMod.decreaseThirst * 0.5F;
+					thirst -= BaseClassMod.decreaseThirst * 0.5F;
 				}
 				else if(biome == BiomeGenBase.mesa || biome == BiomeGenBase.mesaPlateau || biome == BiomeGenBase.mesaPlateau_F)
 				{
-					ExtendedPlayer.get(e.player).data.isThirst -= BaseClassMod.decreaseThirst * 1.5F;
+					thirst -= BaseClassMod.decreaseThirst * 1.5F;
 				}
 				else if(biome == BiomeGenBase.taiga || biome == BiomeGenBase.taigaHills || biome == BiomeGenBase.coldBeach || biome == BiomeGenBase.coldTaiga || biome == BiomeGenBase.coldTaigaHills || biome == BiomeGenBase.iceMountains || biome == BiomeGenBase.icePlains)
 				{
-					ExtendedPlayer.get(e.player).data.isThirst -= BaseClassMod.decreaseThirst * 0.3F;
+					thirst -= BaseClassMod.decreaseThirst * 0.3F;
 				}
 			}
 			else
 			{
-				ExtendedPlayer.get(e.player).data.isThirst = 0;
+				thirst = 0;
 				
 				if(!e.player.isPotionActive(Potion.wither.id))
 				{
 					e.player.addPotionEffect(new PotionEffect(Potion.wither.id, 5*20, 0));
 				}
 			}
+			ExtendedPlayer.get(e.player).data.isThirst = thirst;
 		}
 	}
 }

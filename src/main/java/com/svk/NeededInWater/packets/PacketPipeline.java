@@ -21,6 +21,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.INetHandler;
 import net.minecraft.network.NetHandlerPlayServer;
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.FMLEmbeddedChannel;
 import cpw.mods.fml.common.network.FMLOutboundHandler;
 import cpw.mods.fml.common.network.FMLOutboundHandler.OutboundTarget;
@@ -76,15 +77,16 @@ public class PacketPipeline extends MessageToMessageCodec {
       } else {
          AbstractPacket pkt = (AbstractPacket)clazz.newInstance();
          pkt.decodeInto(ctx, payload.slice());
-         switch(PacketPipeline.NamelessClass1460521118.$SwitchMap$cpw$mods$fml$relauncher$Side[FMLCommonHandler.instance().getEffectiveSide().ordinal()]) {
-         case 1:
+         switch(FMLCommonHandler.instance().getEffectiveSide()) {
+         case CLIENT:
             EntityPlayer player1 = this.getClientPlayer();
             pkt.handleClientSide(player1);
             break;
-         case 2:
+         case SERVER:
             INetHandler netHandler = (INetHandler)ctx.channel().attr(NetworkRegistry.NET_HANDLER).get();
             EntityPlayerMP player = ((NetHandlerPlayServer)netHandler).playerEntity;
             pkt.handleServerSide(player);
+            break;
          }
 
          out.add(pkt);
@@ -144,28 +146,5 @@ public class PacketPipeline extends MessageToMessageCodec {
    public void sendToServer(AbstractPacket message) {
       ((FMLEmbeddedChannel)this.channels.get(Side.CLIENT)).attr(FMLOutboundHandler.FML_MESSAGETARGET).set(OutboundTarget.TOSERVER);
       ((FMLEmbeddedChannel)this.channels.get(Side.CLIENT)).writeAndFlush(message);
-   }
-
-   // $FF: synthetic class
-   static class NamelessClass1460521118 {
-
-      // $FF: synthetic field
-      static final int[] $SwitchMap$cpw$mods$fml$relauncher$Side = new int[Side.values().length];
-
-
-      static {
-         try {
-            $SwitchMap$cpw$mods$fml$relauncher$Side[Side.CLIENT.ordinal()] = 1;
-         } catch (NoSuchFieldError var2) {
-            ;
-         }
-
-         try {
-            $SwitchMap$cpw$mods$fml$relauncher$Side[Side.SERVER.ordinal()] = 2;
-         } catch (NoSuchFieldError var1) {
-            ;
-         }
-
-      }
    }
 }
