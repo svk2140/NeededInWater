@@ -61,7 +61,7 @@ public class EventSpectatorThirst
 				BiomeGenBase biome = e.player.worldObj.getBiomeGenForCoords((int) e.player.posX, (int)e.player.posZ);
 				switch(biome){
 					case BiomeGenBase.desert:
-						case biome == BiomeGenBase.desertHills:
+						case BiomeGenBase.desertHills:
 							ExtendedPlayer.get(e.player).data.isThirst -= BaseClassMod.decreaseThirst;
 							break;
 					case BiomeGenBase.savanna:
