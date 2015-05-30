@@ -2,6 +2,7 @@ package com.svk.NeededInWater.items;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -40,7 +41,7 @@ public class bottle extends Item
 	@Override
     public ItemStack onItemRightClick(ItemStack is, World world, EntityPlayer player)
 	{
-		if(ExtendedPlayer.get(player).data.isThirst < BaseClassMod.maxThirst)
+		if(!player.capabilities.isCreativeMode && ExtendedPlayer.get(player).data.isThirst < BaseClassMod.maxThirst)
 		{
 			if(ExtendedPlayer.get(player).data.isThirst > BaseClassMod.maxThirst/10)
 			{
@@ -62,13 +63,15 @@ public class bottle extends Item
 			}
 			
 			if(is != null)
-			this.removeItem(is, player);
+			this.replaceItem(is, player);
 		}
 		return is;
 	}
 	
-	private void removeItem(ItemStack is, EntityPlayer player)
+	private void replaceItem(ItemStack is, EntityPlayer player)
 	{		
+		IInventory inv = player.inventory;
+		
 		if(player.getCurrentEquippedItem().stackSize > 1)
 		{
 			--is.stackSize;
@@ -77,9 +80,9 @@ public class bottle extends Item
 		{
 			int slot = 0;
 			
-			for (int j = 0; j < player.inventory.getSizeInventory(); j++)
+			for (int j = 0; j < inv.getSizeInventory(); j++)
 			{
-				ItemStack item2 = player.inventory.getStackInSlot( j );
+				ItemStack item2 = inv.getStackInSlot( j );
 
 				if (item2 != null && item2.getItem() == this)
 				{
@@ -88,8 +91,10 @@ public class bottle extends Item
 				}
 			}
 
-			player.inventory.setInventorySlotContents(slot, null);
+			inv.setInventorySlotContents(slot, null);
 		}
+		
+		player.inventory.addItemStackToInventory(new ItemStack(CommonProxy.emptyBottle));
 	}
 	
 	public void effect(EntityPlayer player, World world){}
