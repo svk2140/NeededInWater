@@ -37,7 +37,7 @@ public class EmptyBottle extends Item
     public ItemStack onItemRightClick(ItemStack is, World world, EntityPlayer player)
 	{
 		MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, true);
-		if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+		if (movingobjectposition != null && movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
 		{
 			int x = movingobjectposition.blockX;
 			int y = movingobjectposition.blockY;

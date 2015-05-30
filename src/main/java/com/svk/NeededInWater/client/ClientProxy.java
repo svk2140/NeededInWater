@@ -4,6 +4,7 @@ import org.lwjgl.input.Keyboard;
 
 import com.svk.NeededInWater.base.CommonProxy;
 import com.svk.NeededInWater.client.Overlays.Overlays;
+import com.svk.NeededInWater.events.EventDrink;
 
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.creativetab.CreativeTabs;
@@ -21,5 +22,6 @@ public class ClientProxy extends CommonProxy
 	public static void init()
 	{
 		MinecraftForge.EVENT_BUS.register(new Overlays());
+		MinecraftForge.EVENT_BUS.register(new EventDrink());
 	}
 }
