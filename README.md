@@ -1,2 +1,2 @@
 # NeededInWater
-Mod wich brings more water and drinks
+Mod witch brings more water and drinks
